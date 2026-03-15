@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "CInventoryManager.generated.h"
 
-//DELEGATE
+//1.- Declare a delegate type
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCoinAdded, int32, cointAmount);
 
 UCLASS()
@@ -35,7 +35,7 @@ public:
 	void CoinAdd(int coinAmount);
 	virtual void CoinAdd_Implementation(int coinAmount);
 
-	//DELEGATE
+	//2.- Create an instance of the delegate
 	UPROPERTY(BlueprintAssignable, BlueprintReadWrite, Category = "Inventory")
 	FOnCoinAdded OnCoinUpdated;
 
