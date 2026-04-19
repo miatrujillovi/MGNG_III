@@ -10,6 +10,8 @@
 void UCAudioManager::Initialize(FSubsystemCollectionBase& collection)
 {
 	Super::Initialize(collection);
+
+	LoadSettings();
 }
 
 void UCAudioManager::Deinitialize()
@@ -41,6 +43,17 @@ void UCAudioManager::PlayMusic(USoundBase* _sound, bool _loop, float _pitch)
 	}
 }
 
+void UCAudioManager::ChangeMusic(USoundBase* _sound)
+{
+	if (!_sound || !GetGameInstance()) return;
+
+	if (audioComponent)
+	{
+		audioComponent->SetSound(_sound);
+		audioComponent->Play();
+	}
+}
+
 void UCAudioManager::PlaySFX(USoundBase* _sound, float _pitch)
 {
 	if (!_sound || !GetGameInstance()) return;
@@ -53,17 +66,33 @@ void UCAudioManager::PlaySFX(USoundBase* _sound, float _pitch)
 
 void UCAudioManager::SetMainVolume(float _volume)
 {
+	mainVolume = FMath::Clamp(_volume, 0.0f, 1.0f);
 	mainVolume = _volume;
+	SaveSettings();
+
+	if (audioComponent) 
+	{
+		audioComponent->SetVolumeMultiplier(mainVolume * musicVolume);
+	}
 }
 
 void UCAudioManager::SetMusicVolume(float _volume)
 {
+	musicVolume = FMath::Clamp(_volume, 0.0f, 1.0f);
 	musicVolume = _volume;
+	SaveSettings();
+
+	if (audioComponent)
+	{
+		audioComponent->SetVolumeMultiplier(mainVolume * musicVolume);
+	}
 }
 
 void UCAudioManager::SetSFXVolume(float _volume)
 {
+	sfxVolume = FMath::Clamp(_volume, 0.0f, 1.0f);
 	sfxVolume = _volume;
+	SaveSettings();
 }
 
 void UCAudioManager::LoadSettings()
@@ -77,6 +106,11 @@ void UCAudioManager::LoadSettings()
 			mainVolume = save->mainVolume;
 			musicVolume = save->musicVolume;
 			sfxVolume = save->sfxVolume;
+
+			if (audioComponent)
+			{
+				audioComponent->SetVolumeMultiplier(mainVolume * musicVolume);
+			}
 		}
 	}
 	else 

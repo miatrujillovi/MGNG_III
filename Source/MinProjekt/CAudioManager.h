@@ -22,6 +22,9 @@ public:
 	void PlayMusic(USoundBase* _sound, bool _loop = true, float _pitch = 1.0f);
 
 	UFUNCTION(BlueprintCallable)
+	void ChangeMusic(USoundBase* _sound);
+
+	UFUNCTION(BlueprintCallable)
 	void PlaySFX(USoundBase* _sound, float _pitch = 1.0f);
 
 	UFUNCTION(BlueprintCallable)
@@ -32,6 +35,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetSFXVolume(float _volume);
+
+	UFUNCTION(BlueprintCallable)
+	float GetMainVolume() const { return mainVolume; }
+
+	UFUNCTION(BlueprintCallable)
+	float GetMusicVolume() const { return musicVolume; }
+
+	UFUNCTION(BlueprintCallable)
+	float GetSFXVolume() const { return sfxVolume; }
 
 	void LoadSettings();
 	void SaveSettings();
