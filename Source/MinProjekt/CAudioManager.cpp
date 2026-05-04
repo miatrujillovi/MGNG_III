@@ -5,6 +5,7 @@
 #include <Sound/SoundBase.h>
 #include <Components/AudioComponent.h>
 #include <Kismet/GameplayStatics.h>
+#include "Data/CAudioLibrary.h"
 #include "MinProjekt/CSaveAudioSettings.h"
 
 void UCAudioManager::Initialize(FSubsystemCollectionBase& collection)
@@ -40,6 +41,21 @@ void UCAudioManager::PlayMusic(USoundBase* _sound, bool _loop, float _pitch)
 		audioComponent->SetVolumeMultiplier(mainVolume * musicVolume);
 		audioComponent->SetPitchMultiplier(_pitch);
 		audioComponent->Play();
+	}
+}
+
+void UCAudioManager::PlayMusicLibrary(FName _audioName, bool _loop, float _pitch)
+{
+	if (library) 
+	{
+		for (const auto& entry: library->Entries) 
+		{
+			if (entry.Name == _audioName)
+			{
+				PlayMusic(entry.Sound, _loop, _pitch);
+				return;
+			}
+		}
 	}
 }
 
@@ -93,6 +109,20 @@ void UCAudioManager::SetSFXVolume(float _volume)
 	sfxVolume = FMath::Clamp(_volume, 0.0f, 1.0f);
 	sfxVolume = _volume;
 	SaveSettings();
+}
+
+void UCAudioManager::SetAudioLibrary(UCAudioLibrary* _library)
+{
+	library = _library;
+
+	if (library) 
+	{
+		UE_LOG(LogTemp, Log, TEXT("Audio Library Set"));
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Log, TEXT("Audio Library failed to Set"));
+	}
 }
 
 void UCAudioManager::LoadSettings()

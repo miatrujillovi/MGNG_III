@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+//#include "Data/CAudioLibrary.h"
 #include "CAudioManager.generated.h"
 
 class USoundBase;
 class UAudioComponent;
+class UCAudioLibrary;
 
 UCLASS()
 class MINPROJEKT_API UCAudioManager : public UGameInstanceSubsystem
@@ -20,6 +22,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void PlayMusic(USoundBase* _sound, bool _loop = true, float _pitch = 1.0f);
+
+	UFUNCTION(BlueprintCallable)
+	void PlayMusicLibrary(FName _audioName, bool _loop = true, float _pitch = 1.0f);
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeMusic(USoundBase* _sound);
@@ -35,6 +40,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetSFXVolume(float _volume);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAudioLibrary(UCAudioLibrary* _library);
 
 	UFUNCTION(BlueprintCallable)
 	float GetMainVolume() const { return mainVolume; }
@@ -53,6 +61,9 @@ private:
 	float mainVolume = 1;
 	float musicVolume = 1;
 	float sfxVolume = 1;
+
+
+	TObjectPtr<UCAudioLibrary> library;
 
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> audioComponent;
