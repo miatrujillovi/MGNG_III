@@ -56,6 +56,9 @@ public:
 	void LoadSettings();
 	void SaveSettings();
 
+	UPROPERTY(BlueprintReadOnly)
+	FString _currentSong;
+
 private:
 
 	float mainVolume = 1;

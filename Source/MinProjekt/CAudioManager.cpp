@@ -52,6 +52,7 @@ void UCAudioManager::PlayMusicLibrary(FName _audioName, bool _loop, float _pitch
 		{
 			if (entry.Name == _audioName)
 			{
+				_currentSong = _audioName.ToString();
 				PlayMusic(entry.Sound, _loop, _pitch);
 				return;
 			}
