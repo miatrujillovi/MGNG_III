@@ -20,6 +20,9 @@ public:
 	FVector Flee(FVector MyPosition, FVector TargetPosition, float Impetu);
 
 	UFUNCTION(BlueprintCallable)
+	void Arrive();
+
+	UFUNCTION(BlueprintCallable)
 	void Inertia(float deltaSeconds);
 
 	UFUNCTION(BlueprintCallable)

@@ -29,6 +29,11 @@ FVector UCBoid::Flee(FVector MyPosition, FVector TargetPosition, float Impetu)
 	return Force;
 }
 
+void UCBoid::Arrive() 
+{
+
+}
+
 void UCBoid::Inertia(float deltaSeconds)
 {
 	FVector inertia = FMath::Lerp(Forces, OldForce, Mass);
