@@ -82,6 +82,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Follow Path")
 	float FollowPathImpetu;
 
+	bool bPathCompleted = false;
+
 	UPROPERTY()
 	int32 CurrentIndex = 0;
 
