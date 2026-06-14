@@ -17,10 +17,19 @@ public:
 	FVector Seek(FVector MyPosition, FVector TargetPosition, float Impetu);
 
 	UFUNCTION(BlueprintCallable)
+	FVector SeekRadius(FVector MyPosition, FVector TargetPosition, float Radius, float Impetu);
+
+	UFUNCTION(BlueprintCallable)
 	FVector Flee(FVector MyPosition, FVector TargetPosition, float Impetu);
 
 	UFUNCTION(BlueprintCallable)
-	void Arrive();
+	FVector FleeRadius(FVector MyPosition, FVector TargetPosition, float Radius,  float Impetu);
+
+	UFUNCTION(BlueprintCallable)
+	FVector Arrive(FVector MyPosition, FVector TargetPosition, float TargetRadius, float MaxSpeed);
+
+	UFUNCTION(BlueprintCallable)
+	FVector FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float TargetRadius, float MaxSpeed, float Impetu);
 
 	UFUNCTION(BlueprintCallable)
 	void Inertia(float deltaSeconds);
@@ -51,4 +60,46 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inertia")
 	float Mass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Arrive")
+	AActor* ArriveTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Arrive")
+	float ArriveTargetRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Arrive")
+	float ArriveMaxSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Follow Path")
+	TArray<AActor*> FollowPathTargets;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Follow Path")
+	float FollowPathTargetRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Follow Path")
+	float FollowPathMaxSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Follow Path")
+	float FollowPathImpetu;
+
+	UPROPERTY()
+	int32 CurrentIndex = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Seek Radius")
+	AActor* SeekRadiusTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Seek Radius")
+	float SeekRadiusImpetu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Seek Radius")
+	float SeekRadiusRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flee Radius")
+	AActor* FleeRadiusTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flee Radius")
+	float FleeRadiusImpetu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flee Radius")
+	float FleeRadiusRadius;
 };
