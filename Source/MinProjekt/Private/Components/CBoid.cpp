@@ -168,9 +168,12 @@ FVector UCBoid::FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float
 
 void UCBoid::Inertia(float deltaSeconds)
 {
-	FVector InertiaForce = FMath::Lerp(OldForce, Forces, deltaSeconds * Mass);
+	FVector InertiaForce = FMath::Lerp(OldForce, Forces, 1 - Mass);
 
 	OldForce = InertiaForce;
+
+	//InertiaForce.Normalize(); Esta linea hace que vaya super lento no importa cuando impetu o Speed agregue
+	//InertiaForce = InertiaForce * Speed; Si agrego esta linea, el objeto se mueve de un lado al otro del diametro.
 
 	FVector DeltaLocation = InertiaForce * deltaSeconds;
 
