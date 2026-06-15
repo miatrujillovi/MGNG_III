@@ -6,6 +6,8 @@
 #include "Managers/CCoinsManager.h"
 #include <Kismet/GameplayStatics.h>
 
+//Impetu se refiere a la magnitud que impulsa al objeto hacia el TargetPosition
+
 FVector UCBoid::Seek(FVector MyPosition, FVector TargetPosition, float Impetu)
 {
 	FVector movePosition = TargetPosition - MyPosition;
@@ -126,19 +128,33 @@ FVector UCBoid::FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float
 	//3.- Gets the Distance to the next Point
 	float Distance = FVector::Dist(MyPosition, Target);
 
-	//4.- If it arrives to the radius of the point, change target.
+	//4.- If it arrives to the radius of the point, change target. If its the last, circuit.
 	if (Distance < TargetRadius) 
 	{
 		CurrentIndex++;
 
-		CurrentIndex = FMath::Clamp(CurrentIndex, 0, PathPoints.Num() - 1);
+		//CurrentIndex = FMath::Clamp(CurrentIndex, 0, PathPoints.Num() - 1);
+		if (CurrentIndex >= PathPoints.Num())
+		{
+			CurrentIndex = 0;
+
+			UCCoinsManager* CoinsManager = GetWorld()->GetGameInstance()->GetSubsystem<UCCoinsManager>();
+
+			if (CoinsManager)
+			{
+				CoinsManager->AddCoins(1);
+
+				if (AActor* Owner = GetOwner())
+				{
+					Owner->SetLifeSpan(0.01f);
+				}
+			}
+		}
 	}
 
-	//5.- Bool to detect if we're on the last point.
-	bool bFinalIndex = (CurrentIndex == PathPoints.Num() - 1);
+	//bool bFinalIndex = (CurrentIndex == PathPoints.Num() - 1);
 
-	//6.- If on last point, use arrive. Otherwise, use Seek to reach point
-	if (bFinalIndex) 
+	/*if (bFinalIndex)
 	{
 		float DistanceToFinal = FVector::Dist(MyPosition, PathPoints[CurrentIndex]->GetActorLocation());
 
@@ -151,17 +167,17 @@ FVector UCBoid::FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float
 			{
 				CoinsManager->AddCoins(1);
 
-				/*if (AActor* Owner = GetOwner())
+				if (AActor* Owner = GetOwner())
 				{
 					Owner->SetLifeSpan(0.01f);
-				}*/
+				}
 			}
 
 			return FVector::ZeroVector;
 		}
 
 		return Arrive(MyPosition, PathPoints[CurrentIndex]->GetActorLocation(), TargetRadius, MaxSpeed);
-	}
+	}*/
 
 	return Seek(MyPosition, PathPoints[CurrentIndex]->GetActorLocation(), Impetu);
 }
@@ -172,8 +188,12 @@ void UCBoid::Inertia(float deltaSeconds)
 
 	OldForce = InertiaForce;
 
-	//InertiaForce.Normalize(); Esta linea hace que vaya super lento no importa cuando impetu o Speed agregue
-	//InertiaForce = InertiaForce * Speed; Si agrego esta linea, el objeto se mueve de un lado al otro del diametro.
+	//Truncamos la velocidad si es mayor, sino, seguimos utilizando la fuerza que mande
+	if (InertiaForce.Length() > Speed) 
+	{
+		InertiaForce.Normalize();
+		InertiaForce = InertiaForce * Speed;
+	}
 
 	FVector DeltaLocation = InertiaForce * deltaSeconds;
 
