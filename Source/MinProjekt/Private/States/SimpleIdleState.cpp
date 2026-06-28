@@ -20,13 +20,22 @@ void SimpleIdleState::OnEnter()
 
 TSharedPtr<BaseState> SimpleIdleState::OnUpdate(float DeltaTime)
 {
-	if (_waitTime < 0) 
+	if (_sm->bShouldMove) 
+	{
+		_sm->bShouldMove = false;
+		return _sm->_wanderState;
+	}
+
+	return _sm->_idleState;
+
+
+	/*if (_waitTime < 0)
 	{
 		return _sm->_wanderState;
 	}
 	_waitTime -= DeltaTime;
 
-	return _sm->_idleState;
+	return _sm->_idleState;*/
 }
 
 void SimpleIdleState::OnExit()

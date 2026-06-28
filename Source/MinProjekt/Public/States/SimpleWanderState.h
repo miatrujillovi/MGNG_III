@@ -19,6 +19,8 @@ public:
 	void OnExit() override;
 
 protected:
+	FVector _target;
+
 	float _waitTime = 0;
 	FVector _dir;
 	float _speed = 250;

@@ -33,4 +33,19 @@ public:
 
 	TSharedPtr<BaseState> _idleState;
 	TSharedPtr<BaseState> _wanderState;
+
+	UFUNCTION(BlueprintCallable)
+	void ActivateElevator();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector BottomPosition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector TopPosition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MoveSpeed = 200.f;
+
+	bool bMoveUp = true;
+	bool bShouldMove = false;
 };

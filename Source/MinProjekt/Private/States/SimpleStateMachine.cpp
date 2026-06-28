@@ -21,6 +21,10 @@ void USimpleStateMachine::BeginPlay()
 {
 	Super::BeginPlay();
 	InitializeState();
+
+	BottomPosition = GetOwner()->GetActorLocation();
+	TopPosition = BottomPosition + FVector(0.f, 0.f, 500.f);
+
 	// ...
 	
 }
@@ -50,5 +54,10 @@ void USimpleStateMachine::TickComponent(float DeltaTime, ELevelTick TickType, FA
 		_lastState = _currentState;
 	}
 	// ...
+}
+
+void USimpleStateMachine::ActivateElevator()
+{
+	bShouldMove = true;
 }
 
