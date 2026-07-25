@@ -138,9 +138,9 @@ FVector UCBoid::FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float
 		{
 			CurrentIndex = 0;
 
-			UCCoinsManager* CoinsManager = GetWorld()->GetGameInstance()->GetSubsystem<UCCoinsManager>();
+			//UCCoinsManager* CoinsManager = GetWorld()->GetGameInstance()->GetSubsystem<UCCoinsManager>();
 
-			if (CoinsManager)
+			/*if (CoinsManager)
 			{
 				CoinsManager->AddCoins(1);
 
@@ -148,7 +148,7 @@ FVector UCBoid::FollowPath(FVector MyPosition, TArray<AActor*> PathPoints, float
 				{
 					Owner->SetLifeSpan(0.01f);
 				}
-			}
+			}*/
 		}
 	}
 

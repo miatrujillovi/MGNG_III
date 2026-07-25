@@ -20,7 +20,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetRespawnLibrary(UCRespawnLibrary* _respawnLibrary);
 
+	UFUNCTION(BlueprintCallable)
+	void SetIDLocation(FName NewID);
+
+	UFUNCTION(BlueprintCallable)
+	FName GetCurrentIDLocation() const { return CurrentIDLocation; }
+
 private:
 	UPROPERTY()
 	TObjectPtr<UCRespawnLibrary> respawnLibrary;
+
+	UPROPERTY()
+	FName CurrentIDLocation = NAME_None;
 };

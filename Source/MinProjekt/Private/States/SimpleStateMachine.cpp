@@ -23,7 +23,7 @@ void USimpleStateMachine::BeginPlay()
 	InitializeState();
 
 	BottomPosition = GetOwner()->GetActorLocation();
-	TopPosition = BottomPosition + FVector(0.f, 0.f, 500.f);
+	TopPosition = BottomPosition + FVector(0.f, 0.f, 1000.f);
 
 	// ...
 	

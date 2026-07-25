@@ -14,7 +14,9 @@ enum class EAudioTag : uint8
 	Unknown = 0,
 	Town1,
 	Town2,
-	What
+	What,
+	Wink,
+	NotGoodForMe
 };
 
 USTRUCT(BlueprintType) //Estructura de Datos

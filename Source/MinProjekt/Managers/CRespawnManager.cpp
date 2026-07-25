@@ -45,3 +45,10 @@ void UCRespawnManager::SetRespawnLibrary(UCRespawnLibrary* _respawnLibrary)
 	}
 }
 
+void UCRespawnManager::SetIDLocation(FName NewID)
+{
+	CurrentIDLocation = NewID;
+
+	UE_LOG(LogTemp, Log, TEXT("Current Respawn ID set to: %s"), *CurrentIDLocation.ToString());
+}
+
